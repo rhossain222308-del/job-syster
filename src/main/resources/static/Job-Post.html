@@ -1,0 +1,25 @@
+<input id="title" placeholder="Job Title">
+<textarea id="desc" placeholder="Description"></textarea>
+
+<button onclick="postJob()">Post Job</button>
+
+<script>
+  function postJob() {
+
+    let company = JSON.parse(localStorage.getItem("company"));
+
+    fetch("http://localhost:8080/jobs/post", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        title: document.getElementById("title").value,
+        description: document.getElementById("desc").value,
+        companyName: company.name
+      })
+    })
+            .then(res => res.json())
+            .then(data => {
+              alert("✅ Job posted!");
+            });
+  }
+</script>
