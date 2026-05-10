@@ -3,6 +3,7 @@ package com.habu.job_system.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "jobs")
 public class Job {
 
     @Id
@@ -12,9 +13,12 @@ public class Job {
     private String title;
     private String description;
     private String companyName;
+
+    // ✅ ADD THIS
     private String status;
 
-    // ✅ GETTERS
+    // GETTERS & SETTERS
+
     public Long getId() {
         return id;
     }
@@ -23,33 +27,29 @@ public class Job {
         return title;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    // ✅ SETTERS
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
+    public String getCompanyName() {
+        return companyName;
+    }
+
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    // ✅ ADD THESE
+    public String getStatus() {
+        return status;
     }
 
     public void setStatus(String status) {

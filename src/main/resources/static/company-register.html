@@ -7,47 +7,49 @@
 
   <style>
     body {
-      margin: 0;
+      background: linear-gradient(135deg, #ff512f, #dd2476);
       height: 100vh;
-      background: linear-gradient(135deg, #667eea, #764ba2);
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: 'Segoe UI', sans-serif;
     }
 
-    .card {
+    .card-box {
       width: 420px;
       padding: 30px;
-      border-radius: 20px;
-      background: #fff;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+      border-radius: 16px;
+      background: white;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
 
     .title {
       text-align: center;
-      margin-bottom: 20px;
       font-weight: bold;
+      margin-bottom: 20px;
     }
 
     .form-control {
-      border-radius: 10px;
+      margin-bottom: 12px;
       padding: 12px;
-    }
-
-    .btn-custom {
-      background: #667eea;
-      color: white;
       border-radius: 10px;
     }
 
-    .btn-custom:hover {
-      background: #5a67d8;
+    .btn-register {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      background: #dd2476;
+      color: white;
+      font-weight: bold;
+    }
+
+    .btn-register:hover {
+      background: #b81d62;
     }
 
     #msg {
       text-align: center;
-      margin-top: 15px;
+      margin-top: 10px;
       font-size: 14px;
     }
   </style>
@@ -55,20 +57,22 @@
 
 <body>
 
-<div class="card">
-  <h3 class="title"> Company Register</h3>
+<div class="card-box">
 
-  <input class="form-control mb-3" id="name" placeholder="Company Name">
-  <input class="form-control mb-3" id="email" placeholder="Email">
-  <input class="form-control mb-3" id="password" type="password" placeholder="Password">
+  <h3 class="title">Company Register</h3>
 
-  <button class="btn btn-custom w-100" onclick="register()">Register</button>
+  <input type="text" id="name" class="form-control" placeholder="Company Name">
+  <input type="email" id="email" class="form-control" placeholder="Company Email">
+  <input type="password" id="password" class="form-control" placeholder="Password">
+
+  <button class="btn btn-register" onclick="register()">Register</button>
 
   <p id="msg"></p>
 
-  <p class="text-center mt-2">
+  <p class="text-center mt-3">
     Already have account? <a href="company-login.html">Login</a>
   </p>
+
 </div>
 
 <script>
@@ -79,30 +83,27 @@
     let password = document.getElementById("password").value;
     let msg = document.getElementById("msg");
 
-    if (!name || !email || !password) {
-      msg.innerText = " Please fill all fields";
-      msg.style.color = "red";
-      return;
-    }
-
     fetch("http://localhost:8080/company/register", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        name: name,
-        email: email,
-        password: password
-      })
+      body: JSON.stringify({ name, email, password })
     })
-            .then(res => res.text())
+            .then(res => res.json())
             .then(data => {
-              msg.innerText = " Registration successful!";
+
+              msg.innerText = "Registered successfully";
               msg.style.color = "green";
+
+              setTimeout(() => {
+                window.location.href = "company-login.html";
+              }, 1000);
+
             })
             .catch(() => {
-              msg.innerText = " Server error!";
+              msg.innerText = "Error occurred";
               msg.style.color = "red";
             });
+
   }
 </script>
 
