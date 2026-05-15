@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/jobs")
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class JobController {
 
     @Autowired
@@ -26,13 +26,18 @@ public class JobController {
 
         Job saved = repo.save(job);
 
-        service.processJob(saved); // 🔥 THREAD
+        service.processJob(saved);
 
         return saved;
     }
 
     @GetMapping("/company/{name}")
-    public List<Job> getJobs(@PathVariable String name) {
+    public List<Job> getCompanyJobs(@PathVariable String name) {
         return repo.findByCompanyName(name);
+    }
+
+    @GetMapping("/all")
+    public List<Job> getAllJobs() {
+        return repo.findAll();
     }
 }
